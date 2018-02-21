@@ -1,0 +1,35 @@
+<%= if @current_user do %>
+  
+
+<span><%= link "Create Task", to: task_path(@conn, :new), class: "btn btn-default btn-xs" %></span>
+<p><%= link "View All Tasks", to: task_path(@conn, :index), class: "btn btn-default btn-xs" %></p>
+
+<p><h3>Your Tasks</h3></p>
+
+<%= Enum.map @tasks, fn task -> %>
+<%= if task.user_id == @conn.assigns.current_user.id do %>
+<% IO.inspect task.completed %>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        
+        <p><h5>Title: <%= task.title %>
+	<%= if task.completed == true do %>
+	  <br>Status: Completed</br>
+	<% else %>
+	  <br>Status: Pending</br>
+	<% end %></h5>
+	</p>
+	<td class="text-right">
+        <span><%= link "View", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>
+<% end %>
+

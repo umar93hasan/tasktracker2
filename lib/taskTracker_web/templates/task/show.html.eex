@@ -1,0 +1,41 @@
+<h2>Show Task</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @task.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @task.description %>
+  </li>
+
+  <li>
+    <strong>Time Taken:</strong>
+    <%= @task.time_taken %> mins
+  </li>
+
+  <li>
+    <strong>Completed:</strong>
+    <%= if @task.completed do %>
+	Yes
+    <% else %>
+	No
+    <% end %>
+  </li>
+
+  <li>
+    <strong>Assigned To:</strong>
+	<%= if @task.user==nil do %>
+      	  None
+	<% else %>
+	  <%= @task.user.name %>
+	<% end %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
+<span><%= link "Back", to: page_path(@conn, :feed) %></span>

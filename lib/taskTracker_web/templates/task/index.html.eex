@@ -1,0 +1,47 @@
+<p>
+  Go Back to <%= link "Your Tasks", to: "/feed" %>
+</p>
+
+<h2>Listing Tasks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Time Taken</th>
+      <th>Completed</th>
+      <th>Assigned To</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @tasks do %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <td><%= task.time_taken %></td>
+	<%= if task.completed do %>
+      	  <td>Yes</td>
+	<% else %>
+	  <td>No</td>
+	<% end %>
+
+	<%= if task.user_id==nil do %>
+      	  <td>None</td>
+	  <td class="text-right">
+	    <span><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span>
+	  </td>
+	<% else %>
+	  <td><%= task.user.name %></td>
+	<% end %>
+
+
+      
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Task", to: task_path(@conn, :new) %></span>
