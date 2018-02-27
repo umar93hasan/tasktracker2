@@ -59,9 +59,21 @@
           <span><button class="del-timer btn btn-danger" data-tblock-id="<%= tblock.id %>">Delete</button></span>
           </td>
         </tr>
+        <%= if tblock.etime==~N[2000-01-01 00:00:00.000000] do %>
+        <% else %>
         <tr>
-          
+          <td>
+            <input type="text" id="edit-stime<%= tblock.id %>" placeholder="yyyy-mm-dd HH:MM:SS" autocomplete="off" value="<%= tblock.stime %>"></input>
+          </td>
+          <td>
+            <input type="text" id="edit-etime<%= tblock.id %>" placeholder="yyyy-mm-dd HH:MM:SS" autocomplete="off" value="<%= tblock.etime %>"></input>
+          </td>
+          <td>
+            <span><button class="upd-timer btn btn-info" data-tblock-id="<%= tblock.id %>" data-task-id="<%= @task.id %>">Update</button></span>
+          </td>
         </tr>
+        <tr style="margin-top:50px"><td></td><td></td><td></td></tr>
+        <% end %>
         <% end %>
       </tbody>
     </table>

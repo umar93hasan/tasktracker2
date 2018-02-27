@@ -104,6 +104,41 @@ function del_click(ev) {
   del_timer(tblock_id);
 }
 
+function up_timer(tblock_id,t_id){
+  let st_time = document.getElementById("edit-stime"+tblock_id).value;
+  let e_time = document.getElementById("edit-etime"+tblock_id).value;
+  //console.log(e_time);
+  let text = JSON.stringify({
+    id: tblock_id,
+    time_block: {
+        stime: st_time,
+        etime: e_time,
+        task_id: t_id
+      },
+  });
+
+  $.ajax(time_block_path + "/" + tblock_id, {
+    method: "put",
+    dataType: "json",
+    contentType: "application/json; charset=UTF-8",
+    data: text,
+    success: (resp) => {
+      location.reload();
+    },
+  }).fail(function(err) {
+     //handle fail here
+     alert("Make sure both inputs are of type: yyyy-mm-dd HH:MM:SS");
+   });
+}
+
+function update_click(ev) {
+  let btn = $(ev.target);
+  let tblock_id = btn.data('tblock-id');
+  let t_id = btn.data('task-id');
+  //console.log("in:"+task_id);
+  up_timer(tblock_id,t_id);
+}
+
 function update_timer(){
   if (!$("h2").hasClass("update-timeblock")) {
     return;
@@ -112,8 +147,7 @@ function update_timer(){
   $(".start-new").click(start_click);
   $(".stop-timer").click(stop_click);
   $(".del-timer").click(del_click);
-  //$(".start-task").click(start_click);
-  //$(".end-task").click(end_click);
+  $(".upd-timer").click(update_click);
 }
 
 $(update_timer);
