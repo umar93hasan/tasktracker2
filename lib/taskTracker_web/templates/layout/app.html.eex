@@ -1,43 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>Hello TaskTracker!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-  </head>
+  <title>Hello TaskTracker!</title>
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+</head>
 
-  <body>
+<body>
 
-      <div class="row">
-        <div class="col-3 offset-9">
-          <%= if @current_user do %>
-            <p>
-              Logged in as: <%= @current_user.name %> |
-              <%= link "Log Out", to: "/session", method: :delete %>
-            </p>
-          <% else %>
-            <p>Not logged in.</p>
-          <% end %>
-        </div>
-      </div>
+  <div class="row">
+    <%= if @current_user do %>
+    <div class="col-9">
+      <p class="p-4">
+        <a href="/feed">Feed</a> |
+        <a href="/users">All Users</a>
+      </p>
+    </div>
+    <div class="col-3">
+      <p class="p-4">
+        Logged in as: <%= @current_user.name %> |
+        <%= link "Log Out", to: "/session", method: :delete %>
+      </p>
+    </div>
+    <% else %>
+    <div class="col-3 offset-9">
+      <p>Not logged in.<%= link "Login", to: page_path(@conn, :index), class: "btn btn-xs" %></p>
+    </div>
+    <% end %>
+  </div>
 
-    <div class="container">
+  <div class="container">
     <%= if get_flash(@conn, :info) do %>
-        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <% end %>
     <%= if get_flash(@conn, :error) do %>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     <% end %>
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </body>
+  </div> <!-- /container -->
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+</body>
 </html>

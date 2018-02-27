@@ -2,7 +2,6 @@ defmodule TaskTrackerWeb.SessionController do
   use TaskTrackerWeb, :controller
 
   alias TaskTracker.Accounts
-  alias TaskTracker.Accounts.User
 
   def create(conn, %{"email" => email}) do
     user = Accounts.get_user_by_email(email)
@@ -25,4 +24,3 @@ defmodule TaskTrackerWeb.SessionController do
     |> redirect(to: page_path(conn, :index))
   end
 end
-

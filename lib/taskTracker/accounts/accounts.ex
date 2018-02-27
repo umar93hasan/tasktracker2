@@ -21,6 +21,42 @@ defmodule TaskTracker.Accounts do
     Repo.all(User)
   end
 
+  def get_name_by_id(id) do
+    if id do
+      from(u in User, where: u.id==^id, select: u.name)
+      |> Repo.one()
+    else
+      nil
+    end
+  end
+
+  def list_userdata do
+    Enum.map(list_users(), fn elem ->
+      Map.put(elem, :mgr_name, get_name_by_id(elem.mgr_id))
+    end)
+  end
+
+  def list_user_emails() do
+    from(u in User, select: {u.email,u.id})
+    |> Repo.all()
+    |> List.insert_at(0, {"SELECT", nil})
+  end
+
+  def list_underling_emails(mgr_id) do
+    from(u in User, where: u.mgr_id==^mgr_id, select: {u.email,u.id})
+    |> Repo.all()
+    |> List.insert_at(0, {"SELECT", nil})
+  end
+
+  def get_manager_name(user_id) do
+    from(u1 in User, join: u2 in User, on: u1.mgr_id==u2.id, where: u1.id==^user_id, select: u2.name)
+    |> Repo.one()
+  end
+
+  def get_underlings(user_id) do
+    from(u1 in User, join: u2 in User, on: u1.id==u2.mgr_id, where: u1.id==^user_id, select: u2)
+    |> Repo.all()
+  end
   @doc """
   Gets a single user.
 
@@ -39,7 +75,7 @@ defmodule TaskTracker.Accounts do
 
   # We want a non-bang variant
   def get_user(id), do: Repo.get(User, id)
- 
+
   # And we want by-email lookup
   def get_user_by_email(email) do
     Repo.get_by(User, email: email)

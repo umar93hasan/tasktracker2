@@ -12,7 +12,12 @@
     <%= @user.name %>
   </li>
 
+  <li>
+    <strong>Manager:</strong>
+    <%= @mgr %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<span><%= link "Back", to: page_path(@conn, :feed) %></span>

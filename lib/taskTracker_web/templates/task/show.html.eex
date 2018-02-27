@@ -1,4 +1,7 @@
-<h2>Show Task</h2>
+<script>
+ window.time_block_path = "<%= time_block_path(@conn, :index) %>";
+</script>
+<h2 class="update-timeblock">Show Task</h2>
 
 <ul>
 
@@ -10,11 +13,6 @@
   <li>
     <strong>Description:</strong>
     <%= @task.description %>
-  </li>
-
-  <li>
-    <strong>Time Taken:</strong>
-    <%= @task.time_taken %> mins
   </li>
 
   <li>
@@ -35,7 +33,46 @@
 	<% end %>
   </li>
 
+  <li>
+    <strong>Time Spent:</strong>
+	  <table class="table">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for tblock <- @tblocks do %>
+        <tr>
+          <td><%= tblock.stime %></td>
+          <td>
+          <%= if tblock.etime==~N[2000-01-01 00:00:00.000000] do %>
+            <button class="stop-timer btn btn-success" data-task-id="<%= @task.id %>"
+                    data-tblock-id="<%= tblock.id %>" data-stime="<%= tblock.stime %>">Stop Timer</button>
+          <% else %>
+            <%= tblock.etime %>
+          <% end %>
+          </td>
+          <td>
+          <span><button class="del-timer btn btn-danger" data-tblock-id="<%= tblock.id %>">Delete</button></span>
+          </td>
+        </tr>
+        <tr>
+          
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </li>
+
+  <li>
+    <button class="start-new btn btn-success" data-task-id="<%= @task.id %>">Start New Timer</button>
+  </li>
+
+
+
 </ul>
 
-<span><%= link "Edit", to: task_path(@conn, :edit, @task) %></span>
 <span><%= link "Back", to: page_path(@conn, :feed) %></span>

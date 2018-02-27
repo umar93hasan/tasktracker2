@@ -9,7 +9,6 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Time Taken</th>
       <th>Completed</th>
       <th>Assigned To</th>
 
@@ -21,7 +20,6 @@
     <tr>
       <td><%= task.title %></td>
       <td><%= task.description %></td>
-      <td><%= task.time_taken %></td>
 	<%= if task.completed do %>
       	  <td>Yes</td>
 	<% else %>
@@ -38,7 +36,7 @@
 	<% end %>
 
 
-      
+
     </tr>
 <% end %>
   </tbody>
