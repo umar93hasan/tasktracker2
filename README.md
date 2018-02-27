@@ -1,3 +1,17 @@
+# About App
+
+All users can create, edit users. Manager can delete users who are their underlings.
+
+Only a manager can assign, edit, delete a task to his underlings.
+
+User can only edit the timestamps(start/end) of a task assigned to him under View.
+
+Editing the timestamps are available once the timer is stopped.
+
+A user can update his own task if he is his own manager.
+
+Tasks not assigned to any user can be assigned by a manager only to his underlings.
+
 # TaskTracker
 
 To start your Phoenix server:
@@ -18,3 +32,4 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
